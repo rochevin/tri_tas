@@ -14,6 +14,19 @@ FILE* OuvrirFichier(char* f){
 	return fichier ;
 }
 
+void EcrireFichier(char* f,int* t,int taille){
+	FILE *fichier ;
+
+	if ((fichier = fopen(f, "w")) == NULL) {
+		fprintf(stderr, "Impossible d'ouvrir le fichier %s\n", f) ;
+		exit(EXIT_FAILURE) ;
+	}
+	for (int i = 0 ; i < taille ; i++){
+		fprintf(fichier,"%d\n",t[i]) ;
+	}
+	fclose(fichier) ;
+}
+
 int GetNombreElements(FILE *fichier){
 	int c ;
 	int nLignes = 0 ;

@@ -3,6 +3,7 @@
 typedef void (*Pfonction)(int*,int,int);
 
 FILE* OuvrirFichier(char*) ;
+void EcrireFichier(char*,int*,int) ;
 int GetNombreElements(FILE *) ;
 int* ConstruireTableau(FILE *,int) ;
 void AfficherTableau(int*,int) ;
