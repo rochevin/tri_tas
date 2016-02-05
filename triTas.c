@@ -3,55 +3,77 @@
 #include <string.h>
 #include "triTas.h"
 
+//Fonction d'ouverture d'un fichier f en mode lecture
 FILE* OuvrirFichier(char* f){
 	FILE *fichier ;
 
+	//Ouverture du fichier
 	if ((fichier = fopen(f, "r")) == NULL) {
+		//si fopen renvoit NULL, CaD que le fichier n'a pas été ouvert, on ferme le programme
 		fprintf(stderr, "Impossible d'ouvrir le fichier %s\n", f) ;
 		exit(EXIT_FAILURE) ;
 	}	
 
+	//On renvoit le pointeur vers le fichier
 	return fichier ;
 }
 
+//Fonction d'écriture dans un fichier f, d'un tableau t de taille taille
 void EcrireFichier(char* f,int* t,int taille){
 	FILE *fichier ;
 
+	//Ouverture du fichier en mode écriture
 	if ((fichier = fopen(f, "w")) == NULL) {
+		//si fopen renvoit NULL, CaD que le fichier n'a pas été ouvert, on ferme le programme
 		fprintf(stderr, "Impossible d'ouvrir le fichier %s\n", f) ;
 		exit(EXIT_FAILURE) ;
 	}
+	//On écrit chaque élément du tableau dans le fichier suivit d'un saut de ligne
 	for (int i = 0 ; i < taille ; i++){
 		fprintf(fichier,"%d\n",t[i]) ;
 	}
+	//fermeture du fichier
 	fclose(fichier) ;
 }
 
+//Fonction qui va calculer le nombre d'éléments dans un fichier
+//En comptant le nombre de saut de ligne
 int GetNombreElements(FILE *fichier){
 	int c ;
 	int nLignes = 0 ;
 	int c2 = '\0' ;
- 
+
+	//Tant qu'on est pas arrivé au caractère fin de fichier
+	//On enregistre un seul caractère dans la variable c
 	while((c=fgetc(fichier)) != EOF){
 		if(c == '\n') {
+			//Dans le cas ou ce caractère est un saut de ligne, on ajoute +1 au compteur
 			nLignes++ ;
 		}
+		//On enregistre le caractère dans une variable à chaque fois
+		//On aura donc à la fin du fichier le dernier caractère
 		c2 = c ;
 	}
  
-	/* Ici, c2 est égal au caractère juste avant le EOF. */
+	//Si ce caractère n'est pas un saut de ligne
+	//On rajoute +1 au ocmpteur
 	if(c2 != '\n'){
-		nLignes++ ; /* Dernière ligne non finie */
+		nLignes++ ;
 	}
- 
+
+	//On remet le pointeur au début du fichier
 	rewind(fichier) ;
+	//Et on renvoit le nombre de lignes
 	return nLignes ;
 }
 
+//Fonction qui va allouer la mémoire nécessaire pour créer un tableau contenant l'ensemble des entiers présents dans le fichier
 int* ConstruireTableau(FILE *fichier,int nbElemts) {
 
+	//Allocation de mémoire dynamique
 	int* T = (int*)malloc(nbElemts*sizeof(int)) ;
 
+	//Déclaration des variables
 	int a, i ;
 
 
@@ -60,10 +82,11 @@ int* ConstruireTableau(FILE *fichier,int nbElemts) {
 		T[i] = a ;
 		i++ ;
 	}
-
+	//Et on renvoit le tableau
 	return T ;
 }
 
+//Fonction d'affichage du tableau (pour debogage)
 void AfficherTableau(int* t,int taille){
 	for (int i = 0 ; i < taille ; i++){
 		printf("%d ", t[i]) ;
@@ -71,30 +94,40 @@ void AfficherTableau(int* t,int taille){
 	printf("\n") ;
 }
 
+//Fonction qui va récupérer l'indice de l'enfant gauche de la racine en position i
 int EnfantGauche(int i){
+	//Si i correspond à la première position du tableau, on renvoit la deuxième position
 	if(i == 0) {
 		return 1 ;
 	}
+	//Sinon on renvoit le double de l'indice de la racine i
 	else {
 		return 2*i ;
 	}
 }
-
+//Fonction qui va récupérer l'indice de l'enfant droite de la racine en position i
 int EnfantDroite(int i){   
+	//Si i correspond à la première position du tableau, on renvoit la troisième position
 	if(i == 0) {
 		return 2 ;
 	}
+	//Sinon on renvoit le double de l'indice de la racine i +1
 	else {
 		return 2*i + 1 ;
 	}
 }
 
+//Fonction qui va échanger l'adresse memoire d'un entier a avec l'adresse d'un entier b
 void Echange(int* a,int* b){
 	int tmp=*a;
 	*a=*b;
 	*b=tmp;
 }
 
+//RECURSIF
+//Fonction principale du tri par tas utilisé (Tas max, soit entier le plus grand comme racine)
+//	- pour la construction initiale du tas (ConstruireTas)
+//	- pour le tri dans l'ordre croissant (TriTas) 
 void Tamiser_max_rec(int* t,int element,int taille){
 	int pos_max ;
 	//On récupère les enfants de la racine element
@@ -124,6 +157,10 @@ void Tamiser_max_rec(int* t,int element,int taille){
 	
 }
 
+//NON RECURSIF
+//Fonction principale du tri par tas utilisé (Tas max, soit entier le plus grand comme racine)
+//	- pour la construction initiale du tas (ConstruireTas)
+//	- pour le tri dans l'ordre croissant (TriTas) 
 void Tamiser_max(int* t,int element,int taille){
 	int k = element ; //Correspond à la position de la racine
 	int j = EnfantGauche(k) ; //Correspond à la position de l'enfant gauche de la racine
@@ -151,6 +188,10 @@ void Tamiser_max(int* t,int element,int taille){
 	}
 }
 
+//Fonction qui va appeler la fonction Tamiser pour construire le Tas initiale
+//Soit correspondant à un arbre binaire complet partiellement ordonné, avec le maximum comme racine
+//On fait remonter chaque élément à sa bonne place
+//Ou chaque enfant est plus petit que son parent
 void ConstruireTas(int* t,int taille,Pfonction Tamiser){
 	//Pour construire le tas, on parcours le tableau d'entier de la moitié jusqu'au début
 	//Sur la deuxième moitié du tableau ne sont stockées que les feuilles de l'arbre, qui n'ont donc pas d'enfants
@@ -159,6 +200,10 @@ void ConstruireTas(int* t,int taille,Pfonction Tamiser){
 	}
 }
 
+//Fonction de tri dans l'ordre croissant du Tas
+//Appelle la fonction Tamiser
+//On fait descendre la racine au maximum de l'arbre, via echange, puis on reconstruit l'arbre avec la nouvelle racine
+//On recommence jusqu'à arriver au deuxième indice de l'arbre
 void TriTas(int* t,int taille,Pfonction Tamiser){
 	for(int i = (taille-1); i>=1 ; i--) {
 		Echange(&t[0],&t[i]) ; // On échange le premier élément du tableau (soit le max) avec le dernier élément du tableau
