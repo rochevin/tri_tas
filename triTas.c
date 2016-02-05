@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
 #include "triTas.h"
 
 //Fonction qui va allouer la mémoire nécessaire pour créer un tableau contenant l'ensemble des entiers présents dans le fichier
@@ -93,17 +93,19 @@ void Tamiser_max_rec(int* t,int element,int taille){
 	
 }
 
-//NON RECURSIF
+//ITERATIF
 //Fonction principale du tri par tas utilisé (Tas max, soit entier le plus grand comme racine)
 //	- pour la construction initiale du tas (ConstruireTas)
 //	- pour le tri dans l'ordre croissant (TriTas) 
 void Tamiser_max(int* t,int element,int taille){
 	int racine = element ; //Correspond à la position de la racine
-	int enfant = EnfantGauche(racine); //On définit un variable qui contiendra la valeur de l'enfant (gauche au début de la boucle)
+	int enfant ; //On définit un variable qui contiendra la valeur de l'enfant (gauche au début de la boucle)
 
-	//On continue tant que j est inférieur ou égal à la taille du tas
+	//On continue tant que l'enfant droite est inférieur ou égal à la taille du tas
+	//Soit on continue tant que l'index maximum possible à chaque itération ne dépasse pas l'index max du tas
 	//En cas d'échange, on va effectuer la même vérification avec les anciens enfants du max calculé
-	while(enfant+1 < taille) {
+	while(2*racine+1 <= taille) {
+		enfant = EnfantGauche(racine) ;
 		//On determine lequel des enfants (gauche ou droite) de racine a la plus grande valeur
 		//Uniquement si il y'a deux enfants à comparer (si l'indice de l'enfant gauche n'est pas le dernier élément du tableau)
 		if((enfant<taille) && (t[enfant] < t[enfant+1])){
@@ -115,7 +117,6 @@ void Tamiser_max(int* t,int element,int taille){
 			Echange(&t[racine],&t[enfant]) ;
 			//Et on détermine l'indice de la racine comme étant à la position de son ancien enfant
 			racine = enfant ;
-			enfant = EnfantGauche(racine) ;
 			//Au prochain tour de boucle, on comparera les enfants du max (gauche ou droite) avec la racine à leur nouveau père (ancienne racine)
 		}
 		else { 
