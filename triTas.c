@@ -3,70 +3,6 @@
 #include <string.h>
 #include "triTas.h"
 
-//Fonction d'ouverture d'un fichier f en mode lecture
-FILE* OuvrirFichier(char* f){
-	FILE *fichier ;
-
-	//Ouverture du fichier
-	if ((fichier = fopen(f, "r")) == NULL) {
-		//si fopen renvoit NULL, CaD que le fichier n'a pas été ouvert, on ferme le programme
-		fprintf(stderr, "Impossible d'ouvrir le fichier %s\n", f) ;
-		exit(EXIT_FAILURE) ;
-	}	
-
-	//On renvoit le pointeur vers le fichier
-	return fichier ;
-}
-
-//Fonction d'écriture dans un fichier f, d'un tableau t de taille taille
-void EcrireFichier(char* f,int* t,int taille){
-	FILE *fichier ;
-
-	//Ouverture du fichier en mode écriture
-	if ((fichier = fopen(f, "w")) == NULL) {
-		//si fopen renvoit NULL, CaD que le fichier n'a pas été ouvert, on ferme le programme
-		fprintf(stderr, "Impossible d'ouvrir le fichier %s\n", f) ;
-		exit(EXIT_FAILURE) ;
-	}
-	//On écrit chaque élément du tableau dans le fichier suivit d'un saut de ligne
-	for (int i = 0 ; i < taille ; i++){
-		fprintf(fichier,"%d\n",t[i]) ;
-	}
-	//fermeture du fichier
-	fclose(fichier) ;
-}
-
-//Fonction qui va calculer le nombre d'éléments dans un fichier
-//En comptant le nombre de saut de ligne
-int GetNombreElements(FILE *fichier){
-	int c ;
-	int nLignes = 0 ;
-	int c2 = '\0' ;
-
-	//Tant qu'on est pas arrivé au caractère fin de fichier
-	//On enregistre un seul caractère dans la variable c
-	while((c=fgetc(fichier)) != EOF){
-		if(c == '\n') {
-			//Dans le cas ou ce caractère est un saut de ligne, on ajoute +1 au compteur
-			nLignes++ ;
-		}
-		//On enregistre le caractère dans une variable à chaque fois
-		//On aura donc à la fin du fichier le dernier caractère
-		c2 = c ;
-	}
- 
-	//Si ce caractère n'est pas un saut de ligne
-	//On rajoute +1 au ocmpteur
-	if(c2 != '\n'){
-		nLignes++ ;
-	}
-
-	//On remet le pointeur au début du fichier
-	rewind(fichier) ;
-	//Et on renvoit le nombre de lignes
-	return nLignes ;
-}
-
 //Fonction qui va allouer la mémoire nécessaire pour créer un tableau contenant l'ensemble des entiers présents dans le fichier
 int* ConstruireTableau(FILE *fichier,int nbElemts) {
 
@@ -135,16 +71,16 @@ void Tamiser_max_rec(int* t,int element,int taille){
 	int droite = EnfantDroite(element) ;
 
 	//Si la position de l'enfant gauche ne correspond pas à la dernière du tableau, alors element a deux enfants
-	//On détermine la plus grande valeur des deux enfants
-	if((gauche < taille) && (t[gauche] > t[droite])){
+	//On détermine la plus grande valeur entre la racine et l'enfant gauche
+	if((gauche <= taille) && (t[gauche] > t[element])){
 		pos_max = gauche ;
 	}
 	else {
-		pos_max = droite ;
-	}
-	//Et on compare ce max avec la racine
-	if(t[element] > t[pos_max]){
 		pos_max = element ;
+	}
+	//Puis la plus grande valeur entre l'enfant droite et le maximum (soit gauche soit racine)
+	if((droite <= taille) && (t[droite] > t[pos_max])){
+		pos_max = droite ;
 	}
 	//Si le maximum des trois valeurs (racine, enfant gauche, enfant droite) n'est pas la racine
 	//On procède à l'échange de la valeur de la racine et du maximum
@@ -162,24 +98,24 @@ void Tamiser_max_rec(int* t,int element,int taille){
 //	- pour la construction initiale du tas (ConstruireTas)
 //	- pour le tri dans l'ordre croissant (TriTas) 
 void Tamiser_max(int* t,int element,int taille){
-	int k = element ; //Correspond à la position de la racine
-	int j = EnfantGauche(k) ; //Correspond à la position de l'enfant gauche de la racine
+	int racine = element ; //Correspond à la position de la racine
+	int enfant = EnfantGauche(racine); //On définit un variable qui contiendra la valeur de l'enfant (gauche au début de la boucle)
 
 	//On continue tant que j est inférieur ou égal à la taille du tas
 	//En cas d'échange, on va effectuer la même vérification avec les anciens enfants du max calculé
-	while(j <= taille) {
-		//On determine lequel des enfants (gauche ou droite) de k a la plus grande valeur
+	while(enfant+1 < taille) {
+		//On determine lequel des enfants (gauche ou droite) de racine a la plus grande valeur
 		//Uniquement si il y'a deux enfants à comparer (si l'indice de l'enfant gauche n'est pas le dernier élément du tableau)
-		if((j<taille) && (t[j] < t[j+1])){
-			j++ ;
+		if((enfant<taille) && (t[enfant] < t[enfant+1])){
+			enfant++ ;
 		}
-		// On teste ensuite ce max contre k
-		if(t[k] < t[j]){
-			//Si le max est plus grand que k, on fait remonter ce max à la position de k (echange)
-			Echange(&t[k],&t[j]) ;
+		// On teste ensuite ce max contre racine
+		if(t[racine] < t[enfant]){
+			//Si le max est plus grand que racine, on fait remonter ce max à la position de racine (echange)
+			Echange(&t[racine],&t[enfant]) ;
 			//Et on détermine l'indice de la racine comme étant à la position de son ancien enfant
-			k = j ;
-			j = EnfantGauche(k) ;
+			racine = enfant ;
+			enfant = EnfantGauche(racine) ;
 			//Au prochain tour de boucle, on comparera les enfants du max (gauche ou droite) avec la racine à leur nouveau père (ancienne racine)
 		}
 		else { 
@@ -195,8 +131,8 @@ void Tamiser_max(int* t,int element,int taille){
 void ConstruireTas(int* t,int taille,Pfonction Tamiser){
 	//Pour construire le tas, on parcours le tableau d'entier de la moitié jusqu'au début
 	//Sur la deuxième moitié du tableau ne sont stockées que les feuilles de l'arbre, qui n'ont donc pas d'enfants
-	for(int i = (taille/2); i>=0; i--){
-		(*Tamiser)(t,i, taille - 1) ;
+	for(int i = (taille-1)/2; i>=0; i--){
+		(*Tamiser)(t,i, taille-1) ;
 	}
 }
 
@@ -205,7 +141,7 @@ void ConstruireTas(int* t,int taille,Pfonction Tamiser){
 //On fait descendre la racine au maximum de l'arbre, via echange, puis on reconstruit l'arbre avec la nouvelle racine
 //On recommence jusqu'à arriver au deuxième indice de l'arbre
 void TriTas(int* t,int taille,Pfonction Tamiser){
-	for(int i = (taille-1); i>=1 ; i--) {
+	for(int i = (taille-1); i>0 ; i--) {
 		Echange(&t[0],&t[i]) ; // On échange le premier élément du tableau (soit le max) avec le dernier élément du tableau
 		(*Tamiser)(t,0,i-1) ; //On Tamise le tableau sans prendre en compte le dernier élément déjà trié (donc nouveau tableau de taille taille-1)
 	}
