@@ -8,7 +8,7 @@
 
 //Fonction qui affiche la bonne utilisation du programme
 void prog_usage(char* progname){
-	fprintf(stderr, "Usage: %s [-r] [-i input file name (non optional)] [-o output file name (optional)]\n", progname) ;
+	fprintf(stderr, "Usage: %s [-r (recursive usage)] [-i input file name (non optional)] [-o output file name (optional)]\n", progname) ;
 	exit(EXIT_FAILURE) ;
 }
 
