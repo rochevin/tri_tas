@@ -12,6 +12,7 @@ void prog_usage(char* progname){
 	exit(EXIT_FAILURE) ;
 }
 
+//Fonction principale
 int main(int argc, char** argv) {
 	
 	//Definition des variables pour getopt
@@ -64,17 +65,19 @@ int main(int argc, char** argv) {
 
 
 
-	t1 = clock();
+	t1 = clock(); //Capture le temps avant l'éxecution du programme
 
-	ConstruireTas(Tas,nbElemts,Tamiser) ;
+	ConstruireTas(Tas,nbElemts,Tamiser) ; //Construction du tas initial (max) à partir du tableau (Équivalent fonction insertion)
 
-	TriTas(Tas,nbElemts,Tamiser) ;
+	TriTas(Tas,nbElemts,Tamiser) ; //Tri à partir du Tas max
 
-	t2 = clock();
+	t2 = clock(); //Capture le temps après l'éxecution du programme
 
+	//Ecriture du fichier de sortie
 	EcrireFichier(output_file,Tas,nbElemts) ;
 	printf("MESSAGE : Tri enregistré dans \"%s\"\n",output_file) ;
 
+	//Affichage du temps d'éxecution du programme
 	temps = (float)(t2-t1)/CLOCKS_PER_SEC;
 	printf("MESSAGE : Temps d'éxecution = %f\n", temps);
 
