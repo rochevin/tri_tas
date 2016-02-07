@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
 //Fonction d'ouverture d'un fichier f en mode lecture
 FILE* OuvrirFichier(char* f){
 	FILE *fichier ;

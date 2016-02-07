@@ -11,4 +11,5 @@ void Tamiser_max_rec(int*,int,int) ;
 void Tamiser_max(int*,int,int) ;
 void ConstruireTas(int*,int,Pfonction Tamiser) ;
 void TriTas(int*,int,Pfonction Tamiser) ;
+
 #endif
