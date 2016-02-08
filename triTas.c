@@ -30,25 +30,11 @@ void AfficherTableau(int* t,int taille){
 
 //Fonction qui va récupérer l'indice de l'enfant gauche de la racine en position i
 int EnfantGauche(int i){
-	//Si i correspond à la première position du tableau, on renvoit la deuxième position
-	if(i == 0) {
-		return 1 ;
-	}
-	//Sinon on renvoit le double de l'indice de la racine i
-	else {
-		return 2*i ;
-	}
+	return 2*i+1 ;
 }
 //Fonction qui va récupérer l'indice de l'enfant droite de la racine en position i
 int EnfantDroite(int i){   
-	//Si i correspond à la première position du tableau, on renvoit la troisième position
-	if(i == 0) {
-		return 2 ;
-	}
-	//Sinon on renvoit le double de l'indice de la racine i +1
-	else {
-		return 2*i + 1 ;
-	}
+	return 2*i+2 ;
 }
 
 //Fonction qui va échanger l'adresse memoire d'un entier a avec l'adresse d'un entier b
@@ -100,13 +86,13 @@ void Tamiser_max_rec_2(int* t,int element,int taille){
 
 	//Si la position de l'enfant gauche ne correspond pas à la dernière du tableau, alors element a deux enfants
 	//On détermine la plus grande valeur entre la racine et l'enfant gauche
-	if((pos_max < taille) && (t[gauche] < t[droite])){
-		pos_max = droite ;
+	if(pos_max < taille){
+		if(t[gauche] < t[droite]) {
+			pos_max = droite ;
+		}
 	}
 	else {
-		if(pos_max > taille) {
-			return ;
-		}
+		return ;
 	}
 	//Puis la plus grande valeur entre l'enfant droite et le maximum (soit gauche soit racine)
 	if(t[element] >= t[pos_max]){
@@ -114,6 +100,7 @@ void Tamiser_max_rec_2(int* t,int element,int taille){
 	}
 	
 	Echange(&t[element],&t[pos_max]) ;
+
 	//Puis on fait un appel recursif à la fonction en précisant l'ancienne position du maximum
 	Tamiser_max_rec_2(t, pos_max, taille) ;	
 }

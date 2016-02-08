@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 	//Definition des variables pour getopt
 	int option ;
 	char *input_file = NULL, *output_file = NULL , *type = "itérative" ;
-	Pfonction Tamiser = Tamiser_max ; //Définit un pointeur de fonction pour le choix recursif ou non, par défaut non recursif
+	Pfonction Tamiser = Tamiser_max ; //Définit un pointeur de fonction pour le choix recursif ou non, par défaut itératif
 	//Parsing de getopt
 	while ((option = getopt(argc , argv, "i:o:rh")) != -1){
     	switch (option) {
