@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <unistd.h>
 #include <getopt.h>
 #include "triTas.h"
 #include "fichier.h"
@@ -17,8 +16,8 @@ int main(int argc, char** argv) {
 	
 	//Definition des variables pour getopt
 	int option ;
-	char *input_file = NULL, *output_file = "output" ;
-	Pfonction Tamiser = Tamiser_max; //Définit un pointeur de fonction pour le choix recursif ou non, par défaut non recursif
+	char *input_file = NULL, *output_file = "output" , *type = "itérative" ;
+	Pfonction Tamiser = Tamiser_max ; //Définit un pointeur de fonction pour le choix recursif ou non, par défaut non recursif
 	//Parsing de getopt
 	while ((option = getopt(argc , argv, "i:o:r")) != -1){
     	switch (option) {
@@ -29,7 +28,7 @@ int main(int argc, char** argv) {
 				output_file = optarg ; //On récupère le nom du fichier de sortie
 				break ;
 			case 'r':
-				printf("MESSAGE : Utilisation recursive du programme\n") ;
+				type = "récursive" ;
 				Tamiser = Tamiser_max_rec ; //dans le cas ou l'utilisateur selectionne -r, on utilise la fonction recursive
 				break ;
 			case '?':
@@ -43,6 +42,9 @@ int main(int argc, char** argv) {
 		prog_usage(argv[0]) ;
 	}
 
+	//Sinon on peut lancer le programme
+	//On affiche le type de la fonction de tri utilisée : itérative ou récursive
+	printf("MESSAGE : Utilisation %s du programme\n",type) ;
 
 	//Partie qui va servir à calculer le temps d'execution des fonctions
 	float temps ;
@@ -79,7 +81,9 @@ int main(int argc, char** argv) {
 
 	//Affichage du temps d'éxecution du programme
 	temps = (float)(t2-t1)/CLOCKS_PER_SEC;
-	printf("MESSAGE : Temps d'éxecution = %f\n", temps);
+	printf("MESSAGE : Temps d'éxecution = %f secondes\n", temps);
+
+	free(Tas) ; //Libération de l'espace mémoire (optionnel)
 
 	return EXIT_SUCCESS;
 }
