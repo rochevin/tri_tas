@@ -16,10 +16,10 @@ int main(int argc, char** argv) {
 	
 	//Definition des variables pour getopt
 	int option ;
-	char *input_file = NULL, *output_file = "output" , *type = "itérative" ;
+	char *input_file = NULL, *output_file = NULL , *type = "itérative" ;
 	Pfonction Tamiser = Tamiser_max ; //Définit un pointeur de fonction pour le choix recursif ou non, par défaut non recursif
 	//Parsing de getopt
-	while ((option = getopt(argc , argv, "i:o:r")) != -1){
+	while ((option = getopt(argc , argv, "i:o:rh")) != -1){
     	switch (option) {
 			case 'i':
 				input_file = optarg ; //On récupère le nom du fichier qui contient la liste d'entiers
@@ -30,6 +30,9 @@ int main(int argc, char** argv) {
 			case 'r':
 				type = "récursive" ;
 				Tamiser = Tamiser_max_rec ; //dans le cas ou l'utilisateur selectionne -r, on utilise la fonction recursive
+				break ;
+			case 'h':
+				prog_usage(argv[0]) ; //On print l'utilisation du programme dans le cas ou l'utilisateur utilise la commande h
 				break ;
 			case '?':
 				prog_usage(argv[0]) ; //On print l'utilisation du programme dans le cas ou un argument inconnu est utilisé
@@ -44,7 +47,7 @@ int main(int argc, char** argv) {
 
 	//Sinon on peut lancer le programme
 	//On affiche le type de la fonction de tri utilisée : itérative ou récursive
-	printf("MESSAGE : Utilisation %s du programme\n",type) ;
+	fprintf(stderr, "MESSAGE : Utilisation %s du programme\n",type) ;
 
 	//Partie qui va servir à calculer le temps d'execution des fonctions
 	float temps ;
@@ -63,7 +66,7 @@ int main(int argc, char** argv) {
 	fclose(fichier) ;
 
 	//On affiche le nombre d'élements, puis le tableau
-	printf("MESSAGE : %d éléments à traiter\n",nbElemts) ;
+	fprintf(stderr, "MESSAGE : %d éléments à traiter\n",nbElemts) ;
 
 
 
@@ -76,12 +79,17 @@ int main(int argc, char** argv) {
 	t2 = clock(); //Capture le temps après l'éxecution du programme
 
 	//Ecriture du fichier de sortie
-	EcrireFichier(output_file,Tas,nbElemts) ;
-	printf("MESSAGE : Tri enregistré dans \"%s\"\n",output_file) ;
-
+	if(output_file == NULL) {
+		fprintf(stderr, "MESSAGE : Affichage du tri sur sortie standard\n") ;
+		AfficherTableau(Tas,nbElemts) ;
+	}
+	else {
+		EcrireFichier(output_file,Tas,nbElemts) ;
+		fprintf(stderr, "MESSAGE : Tri enregistré dans \"%s\"\n",output_file) ;
+	}
 	//Affichage du temps d'éxecution du programme
 	temps = (float)(t2-t1)/CLOCKS_PER_SEC;
-	printf("MESSAGE : Temps d'éxecution = %f secondes\n", temps);
+	fprintf(stderr, "MESSAGE : Temps d'éxecution = %f secondes\n", temps);
 
 	free(Tas) ; //Libération de l'espace mémoire (optionnel)
 
