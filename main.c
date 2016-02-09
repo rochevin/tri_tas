@@ -78,6 +78,10 @@ int main(int argc, char** argv) {
 
 	t2 = clock(); //Capture le temps après l'éxecution du programme
 
+	//Affichage du temps d'éxecution du programme
+	temps = (float)(t2-t1)/CLOCKS_PER_SEC;
+	fprintf(stderr, "MESSAGE : Temps d'éxecution = %f secondes\n", temps);
+
 	//Ecriture du fichier de sortie
 	if(output_file == NULL) {
 		fprintf(stderr, "MESSAGE : Affichage du tri sur sortie standard\n") ;
@@ -87,9 +91,6 @@ int main(int argc, char** argv) {
 		EcrireFichier(output_file,Tas,nbElemts) ;
 		fprintf(stderr, "MESSAGE : Tri enregistré dans \"%s\"\n",output_file) ;
 	}
-	//Affichage du temps d'éxecution du programme
-	temps = (float)(t2-t1)/CLOCKS_PER_SEC;
-	fprintf(stderr, "MESSAGE : Temps d'éxecution = %f secondes\n", temps);
 
 	free(Tas) ; //Libération de l'espace mémoire (optionnel)
 
