@@ -77,7 +77,6 @@ void Tamiser_max_rec(int* t,int element,int taille){
 	
 }
 
-
 //ITERATIF
 //Fonction principale du tri par tas utilisé (Tas max, soit entier le plus grand comme racine)
 //	- pour la construction initiale du tas (ConstruireTas)

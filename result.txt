@@ -1,0 +1,75 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 65.53      0.66     0.66  7499999     0.00     0.00  Tamiser_max
+ 14.89      0.81     0.15 105867450     0.00     0.00  Echange
+  6.95      0.88     0.07 102815673     0.00     0.00  EnfantGauche
+  3.97      0.92     0.04        1    40.11    40.11  ConstruireTableau
+  3.97      0.96     0.04        1    40.11    40.11  GetNombreElements
+  2.98      0.99     0.03        1    30.09    30.09  EcrireFichier
+  1.99      1.01     0.02                             EnfantDroite
+  0.00      1.01     0.00        1     0.00   291.81  ConstruireTas
+  0.00      1.01     0.00        1     0.00     0.00  OuvrirFichier
+  0.00      1.01     0.00        1     0.00   590.72  TriTas
+
+			Call graph
+
+
+granularity: each sample hit covers 2 byte(s) for 0.99% of 1.01 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     98.0    0.00    0.99                 main [1]
+                0.00    0.59       1/1           TriTas [3]
+                0.00    0.29       1/1           ConstruireTas [4]
+                0.04    0.00       1/1           GetNombreElements [8]
+                0.04    0.00       1/1           ConstruireTableau [7]
+                0.03    0.00       1/1           EcrireFichier [9]
+                0.00    0.00       1/1           OuvrirFichier [11]
+-----------------------------------------------
+                0.22    0.07 2500000/7499999     ConstruireTas [4]
+                0.44    0.14 4999999/7499999     TriTas [3]
+[2]     86.4    0.66    0.21 7499999         Tamiser_max [2]
+                0.14    0.00 100867451/105867450     Echange [5]
+                0.07    0.00 102815673/102815673     EnfantGauche [6]
+-----------------------------------------------
+                0.00    0.59       1/1           main [1]
+[3]     58.3    0.00    0.59       1         TriTas [3]
+                0.44    0.14 4999999/7499999     Tamiser_max [2]
+                0.01    0.00 4999999/105867450     Echange [5]
+-----------------------------------------------
+                0.00    0.29       1/1           main [1]
+[4]     28.8    0.00    0.29       1         ConstruireTas [4]
+                0.22    0.07 2500000/7499999     Tamiser_max [2]
+-----------------------------------------------
+                0.01    0.00 4999999/105867450     TriTas [3]
+                0.14    0.00 100867451/105867450     Tamiser_max [2]
+[5]     14.9    0.15    0.00 105867450         Echange [5]
+-----------------------------------------------
+                0.07    0.00 102815673/102815673     Tamiser_max [2]
+[6]      6.9    0.07    0.00 102815673         EnfantGauche [6]
+-----------------------------------------------
+                0.04    0.00       1/1           main [1]
+[7]      4.0    0.04    0.00       1         ConstruireTableau [7]
+-----------------------------------------------
+                0.04    0.00       1/1           main [1]
+[8]      4.0    0.04    0.00       1         GetNombreElements [8]
+-----------------------------------------------
+                0.03    0.00       1/1           main [1]
+[9]      3.0    0.03    0.00       1         EcrireFichier [9]
+-----------------------------------------------
+                                                 <spontaneous>
+[10]     2.0    0.02    0.00                 EnfantDroite [10]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[11]     0.0    0.00    0.00       1         OuvrirFichier [11]
+-----------------------------------------------
+
+Index by function name
+
+   [7] ConstruireTableau      [10] EnfantDroite            [2] Tamiser_max
+   [4] ConstruireTas           [6] EnfantGauche            [3] TriTas
+   [5] Echange                 [8] GetNombreElements
+   [9] EcrireFichier          [11] OuvrirFichier
