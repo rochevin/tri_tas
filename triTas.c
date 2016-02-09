@@ -48,19 +48,19 @@ void Echange(int* a,int* b){
 //Fonction principale du tri par tas utilisé (Tas max, soit entier le plus grand comme racine)
 //	- pour la construction initiale du tas (ConstruireTas)
 //	- pour le tri dans l'ordre croissant (TriTas) 
-void Tamiser_max_rec(int* t,int element,int taille){
+void Tamiser_max_rec(int* t,int racine,int taille){
 	int pos_max ;
-	//On récupère les enfants de la racine element
-	int gauche = EnfantGauche(element) ;
-	int droite = EnfantDroite(element) ;
+	//On récupère les enfants de la racine
+	int gauche = EnfantGauche(racine) ;
+	int droite = EnfantDroite(racine) ;
 
-	//Si la position de l'enfant gauche ne correspond pas à la dernière du tableau, alors element a deux enfants
+	//Si la position de l'enfant gauche ne correspond pas à la dernière du tableau, alors racine a deux enfants
 	//On détermine la plus grande valeur entre la racine et l'enfant gauche
-	if((gauche <= taille) && (t[gauche] > t[element])){
+	if((gauche <= taille) && (t[gauche] > t[racine])){
 		pos_max = gauche ;
 	}
 	else {
-		pos_max = element ;
+		pos_max = racine ;
 	}
 	//Puis la plus grande valeur entre l'enfant droite et le maximum (soit gauche soit racine)
 	if((droite <= taille) && (t[droite] > t[pos_max])){
@@ -69,25 +69,23 @@ void Tamiser_max_rec(int* t,int element,int taille){
 	//Si le maximum des trois valeurs (racine, enfant gauche, enfant droite) n'est pas la racine
 	//On procède à l'échange de la valeur de la racine et du maximum
 	//Le maximum devient la nouvelle racine
-	if(pos_max != element) {
-		Echange(&t[element],&t[pos_max]) ;
+	if(pos_max != racine) {
+		Echange(&t[racine],&t[pos_max]) ;
 		//Puis on fait un appel recursif à la fonction en précisant l'ancienne position du maximum
 		Tamiser_max_rec(t, pos_max, taille) ;
 	}
-	
 }
+
 
 //ITERATIF
 //Fonction principale du tri par tas utilisé (Tas max, soit entier le plus grand comme racine)
 //	- pour la construction initiale du tas (ConstruireTas)
 //	- pour le tri dans l'ordre croissant (TriTas) 
-void Tamiser_max(int* t,int element,int taille){
-	int racine = element ; //Correspond à la position de la racine
+void Tamiser_max(int* t,int racine,int taille){
 	int enfant ; //On définit un variable qui contiendra la valeur de l'enfant (gauche au début de la boucle)
 
-	//On continue tant que l'enfant droite est inférieur ou égal à la taille du tas
-	//Soit on continue tant que l'index maximum possible à chaque itération ne dépasse pas l'index max du tas
-	//En cas d'échange, on va effectuer la même vérification avec les anciens enfants du max calculé
+	//On continue tant que l'enfant gauche de la racine est inférieur ou égal à la taille du tas
+	//En cas d'échange entre un enfant et la racine, on va effectuer la même vérification avec les anciens enfants du premier et le second
 	while(2*racine+1 <= taille) {
 		enfant = EnfantGauche(racine) ;
 		//On determine lequel des enfants (gauche ou droite) de racine a la plus grande valeur
