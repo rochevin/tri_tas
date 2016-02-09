@@ -70,13 +70,13 @@ int main(int argc, char** argv) {
 
 
 
-	t1 = clock(); //Capture le temps avant l'éxecution du programme
+	//t1 = clock(); //Capture le temps avant l'éxecution du programme
 
 	ConstruireTas(Tas,nbElemts,Tamiser) ; //Construction du tas initial (max) à partir du tableau (Équivalent fonction insertion)
 
 	TriTas(Tas,nbElemts,Tamiser) ; //Tri à partir du Tas max
 
-	t2 = clock(); //Capture le temps après l'éxecution du programme
+	//t2 = clock(); //Capture le temps après l'éxecution du programme
 
 	//Ecriture du fichier de sortie
 	if(output_file == NULL) {
@@ -88,10 +88,10 @@ int main(int argc, char** argv) {
 		fprintf(stderr, "MESSAGE : Tri enregistré dans \"%s\"\n",output_file) ;
 	}
 	//Affichage du temps d'éxecution du programme
-	temps = (float)(t2-t1)/CLOCKS_PER_SEC;
-	fprintf(stderr, "MESSAGE : Temps d'éxecution = %f secondes\n", temps);
+	//temps = (float)(t2-t1)/CLOCKS_PER_SEC;
+	//fprintf(stderr, "MESSAGE : Temps d'éxecution = %f secondes\n", temps);
 
-	free(Tas) ; //Libération de l'espace mémoire (optionnel)
+	//free(Tas) ; //Libération de l'espace mémoire (optionnel)
 
 	return EXIT_SUCCESS;
 }
