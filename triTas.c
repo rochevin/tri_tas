@@ -9,7 +9,7 @@ int* ConstruireTableau(FILE *fichier,int nbElemts) {
 	int* T = (int*)malloc(nbElemts*sizeof(int)) ;
 
 	//Déclaration des variables
-	int a, i ;
+	int a, i = 0 ;
 
 
 	//On enregistre les entiers dans le tableau
@@ -75,36 +75,6 @@ void Tamiser_max_rec(int* t,int element,int taille){
 		Tamiser_max_rec(t, pos_max, taille) ;
 	}
 	
-}
-//Recursif V2
-void Tamiser_max_rec_2(int* t,int element,int taille){
-	//On récupère les enfants de la racine element
-	int gauche = EnfantGauche(element) ;
-	int droite = EnfantDroite(element) ;
-
-	int pos_max = gauche ;
-
-	//Si la position de l'enfant gauche ne correspond pas à la dernière du tableau, alors element a deux enfants
-	//On détermine la plus grande valeur entre la racine et l'enfant gauche
-	if(pos_max < taille){
-		if(t[gauche] < t[droite]) {
-			pos_max = droite ;
-		}
-	}
-	else {
-		return ;
-	}
-	//Puis la plus grande valeur entre l'enfant droite et le maximum (soit gauche soit racine)
-	if(t[element] >= t[pos_max]){
-		return ;
-	}
-	
-	int temp = t[element];
-	t[element] = t[pos_max];
-	t[pos_max] = temp;
-
-	//Puis on fait un appel recursif à la fonction en précisant l'ancienne position du maximum
-	Tamiser_max_rec_2(t, pos_max, taille) ;	
 }
 
 
