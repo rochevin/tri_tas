@@ -99,7 +99,9 @@ void Tamiser_max_rec_2(int* t,int element,int taille){
 		return ;
 	}
 	
-	Echange(&t[element],&t[pos_max]) ;
+	int temp = t[element];
+	t[element] = t[pos_max];
+	t[pos_max] = temp;
 
 	//Puis on fait un appel recursif à la fonction en précisant l'ancienne position du maximum
 	Tamiser_max_rec_2(t, pos_max, taille) ;	
