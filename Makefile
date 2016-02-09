@@ -6,7 +6,7 @@ OPT = -Wall -pedantic -std=c11
 SRC = main
 EXE = triTas
 #PROFILAGE PROG
-PROFILE = yes
+PROFILE = no
 ifeq ($(PROFILE),yes)
 	OPT += -pg
 endif
