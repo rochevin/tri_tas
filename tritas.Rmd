@@ -1,0 +1,139 @@
+---
+title: "Projet-C : Tri par tas"
+author: "Vincent ROCHER"
+date: "22 février 2016"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    theme: default
+    highlight: espresso
+
+---
+
+# But du programme
+
+Le but du programme est de trier une liste d'entier présent dans un fichier dans l'ordre croissant. Le programme utilise des structures particulières de programmation pour fonctionner :
+
+* Un tas représentant un arbre binaire partiellement ordonné (représenté par un tableau).
+* Pour chaque noeud $n$, son enfant gauche est placé en $2n$ et son enfant droite en $2n+1$.
+* Ce tas doit être organisé en Tas max, soit la plus grande valeur comme racine (en premier indice).
+
+# Fichiers
+
+* __`README.html`__ : Fichier README.
+* __`Makefile`__ : Fichier de compilation.
+* __`main.c`__ : Fichier principal du programme.
+* __`fichier.c`__ : Fichier contenant les fonctions nécessaire à la lecture et écriture de fichiers.
+* __`fichier.h`__ : Fichier d'en-tête de __`fichier.c`__.
+* __`triTas.c`__ : Fichier contenant les fonctions d'insertion du Tas, de tri et de tamisage.
+* __`triTas.h`__ : Fichier d'en-tête de __`triTas.c`__.
+* __`sample/`__ : Dossier contenant les fichiers utilisés pour les tests du programme, avec $10$,$20$,$50$,$500$ et $5000$ entiers (version non triée, croissante et décroissante).
+
+#Fonctions
+
+##__fichier.c__
+
+__fichier.c__ contient 3 fonctions :
+
+```c
+FILE* OuvrirFichier(char*) ;
+void EcrireFichier(char*,int*,int) ;
+int GetNombreElements(FILE *) ;
+```
+
+* `OuvrirFichier` Lit un fichier.
+    * __Input__ : Un nom de fichier.
+    * __Output__ : Un pointeur de fichier.
+* `EcrireFichier` Va écrire le résultat du Tas trié dans un fichier.
+    * __Input__ : Un nom de fichier, le Tas et la taille du tas.
+* `GetNombreElements` Va écrire le résultat du Tas trié dans un fichier.
+    * __Input__ : Un pointeur de fichier.
+    * __Output__ : Un entier correspondant au nombre d'entiers présents dans le fichier.
+
+##__triTas.h__
+
+En plus de contenir les en-têtes de fonctions, __triTas.h__ va définir un type particulier :
+```c
+typedef void (*Pfonction)(int*,int,int);
+```
+ce `Pfonction` va contenir un pointeur vers une fonction, ce qui va permettre au programme de choisir entre la fonction recursive ou itérative du tamisage (`Tamiser_max_rec` ou `Tamiser_max`).
+
+##__triTas.c__
+
+__triTas.c__ contient 9 fonctions :
+
+```c
+int* ConstruireTableau(FILE *,int) ;
+void AfficherTableau(int*,int) ;
+int EnfantGauche(int) ;
+int EnfantDroite(int) ;
+void Echange(int*,int*) ;
+void Tamiser_max_rec(int*,int,int) ;
+void Tamiser_max(int*,int,int) ;
+void ConstruireTas(int*,int,Pfonction Tamiser) ;
+void TriTas(int*,int,Pfonction Tamiser) ;
+```
+
+* `ConstruireTableau` va construire un tas initial (ne suivant pas les règles d'un arbre binaire complet partiellement ordonné) à partir d'une liste d'entier présent dans un fichier.
+    * __Input__ : Un pointeur de fichier, ainsi que le nombre d'éléments présents dans le fichier.
+    * __Output__ : Un tableau contenant les entiers.
+* `AfficherTableau` sert uniquement pour le débogage, en affichant le tableau dans la sortie standard.
+    * __Input__ : Un tableau d'entier et la taille du tableau.
+* `EnfantGauche` et `EnfantDroite` vont servir à renvoyer la position des enfants pour une racine donnée.
+    * __Input__ : Un entier correspondant à la position de la racine dans le tableau.
+    * __Output__ : Un entier correspondant à la position de l'enfant droite ou gauche de la racine dans le tableau.
+* `Echange` va échanger deux éléments dans un tableau.
+    * __Input__ : Deux références correspondant à l'espace mémoire de deux entiers.
+* `Tamiser_max_rec` et `Tamiser_max` sont les deux fonctions les plus importantes du programme. Elles vont replacer un entier correctement dans le Tas en fonction des règles établies (Tas max ou tas min), en le comparant avec ses enfants, et en faisant l'échange si besoin est jusqu'à ce que l'entier soit correctement placé dans le tableau.
+    * __Input__ : Le tas, la position de l'entier dans le tas et la taille du tableau.
+* `ConstruireTas` va construire le tas suivant les règles établies (tas max ou min) pour représenter l'arbre correctement (voir partie but du programme).
+    * __Input__ : La liste des entiers sous forme de tableau, la taille du tableau et la fonction à utiliser pour construire le tas (`Tamiser_max_rec` ou `Tamiser_max`).
+* `TriTas` va trier le tas dans l'ordre croissant.
+    * __Input__ : Le tas ordonné de façon a représenter un arbre binaire partiellement ordonné (`ConstruireTas`), la taille du Tas et la fonction à utiliser pour trier le tas (`Tamiser_max_rec` ou `Tamiser_max`).
+
+#Déroulement du programme (`main.c`)
+
+Le fonctionnement de `main.c` s'effectue de la façon suivante :
+
+* On récupère les options que l'utilisateur à passé en argument : `Usage: ./triTas [-r (recursive usage)] [-i input file name (non optional)] [-o output file name (optional)]`
+* Si l'utilisateur choisit l'option `-r`, on fera appel à la fonction `Tamiser_max_rec`, sinon par défaut le programme utilise la fonction `Tamiser_max`.
+* On ouvre le fichier portant le nom donné en argument (`OuvrirFichier`).
+* On détermine le nombre d'éléments présents dans le fichier (`GetNombreElements`).
+* On construit le tableau à partir des entiers contenus dans le fichier (`ConstruireTableau`).
+* Ensuite on construit le Tas initial (`ConstruireTas`) en faisant appel à la fonction de tamisage définie au début du programme.
+* On réalise ensuite le tri du Tas (croissant) à l'aide de la fonction `TriTas`.
+* On écrit ensuite le résultat du tri dans le fichier fournit en argument (`EcrireFichier`).
+
+#Tests avec les fichiers de `sample/`
+
+##Execution du programme avec la fonction récursive
+|__Entiers__|10|20|50|500|5000|
+|---|---|---|---|---|---|
+|__Non trié__|$3.26^{-6}$ sec|$4.81^{-6}$ sec|$9.68^{-6}$ sec|$10.447^{-5}$ sec|$12.782^{-3}$ sec|
+|__Croissant__|$3.37^{-6}$ sec|$4.73^{-6}$ sec|$9.96^{-6}$ sec|$10.109^{-5}$ sec|$11.143^{-3}$ sec|
+|__Décroissant__|$3.14^{-6}$ sec|$4.32^{-6}$ sec|$8.65^{-6}$ sec|$8.983^{-5}$ sec|$11.109^{-3}$ sec|
+
+
+##Execution du programme avec la fonction itérative
+|__Entiers__|10|20|50|500|5000|
+|---|---|---|---|---|---|
+|__Non trié__|$2.86^{-6}$ sec|$4.19^{-6}$ sec|$8.24^{-6}$ sec|$8.623^{-5}$ sec|$8.504^{-3}$ sec|
+|__Croissant__|$2.87^{-6}$ sec|$4.02^{-6}$ sec|$8.18^{-6}$ sec|$8.268^{-5}$ sec|$8.636^{-3}$ sec|
+|__Décroissant__|$2.89^{-6}$ sec|$3.69^{-6}$ sec|$7.51^{-6}$ sec|$8.282^{-5}$ sec|$9.034^{-3}$ sec|
+
+##Commentaires
+
+Pour construire ces deux tableaux, chaque test a été répété $1000$ dans le but de produire un temps moyen cohérent (Tests réalisés sur ordinateur personnel). 
+
+Ce qu'on peut constater, c'est que peu importe le nombre d'entier, la fonction itérative est toujours plus rapide que la fonction récursive. 
+
+Même si la fonction récursive peut faire appel à moins d'appel de fonctions que l'itératif de tour de boucle (notamment lorsque les entiers sont déjà triés), il est probable que la différence de temps d'éxecution soit due à la plus forte consommation en mémoire et en temps d'un appel de fonction comparé à un tour de boucle.
+
+À priori, il vaut toujours mieux utiliser la fonction itérative, qui est plus rapide, mais même pour un grand nombre d'entier à trier, le temps d'éexecution est très court. Ceci peut s'expliquer par la complexité du tri, qui est de $n \times log(n)$, et non pas quadratique ($n^2$).
+
+Pour trier des entiers déjà triés, la fonction recursive semble légèrement plus performante lorsque les entiers sont triés dans l'ordre décroissant.
+
+#Problèmes rencontrés
+
+Dans une première version du programme, 
