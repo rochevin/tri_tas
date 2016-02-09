@@ -3,72 +3,72 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls  ms/call  ms/call  name    
- 61.80      0.88     0.88  7499999     0.00     0.00  Tamiser_max_rec
- 12.71      1.06     0.18 108367450     0.00     0.00  EnfantGauche
- 10.95      1.21     0.16 105867450     0.00     0.00  Echange
-  7.77      1.32     0.11 108367450     0.00     0.00  EnfantDroite
-  4.59      1.39     0.07                             Tamiser_max_rec_2
-  1.41      1.41     0.02        1    20.06    20.06  GetNombreElements
-  0.71      1.42     0.01        1    10.03   895.00  TriTas
-  0.00      1.42     0.00        1     0.00     0.00  ConstruireTableau
-  0.00      1.42     0.00        1     0.00   438.81  ConstruireTas
-  0.00      1.42     0.00        1     0.00     0.00  EcrireFichier
-  0.00      1.42     0.00        1     0.00     0.00  OuvrirFichier
+ 60.64      0.81     0.81  7499999     0.00     0.00  Tamiser_max_rec
+ 12.73      0.98     0.17 105867450     0.00     0.00  Echange
+  7.49      1.08     0.10 108367450     0.00     0.00  EnfantGauche
+  5.99      1.16     0.08 108367450     0.00     0.00  EnfantDroite
+  4.49      1.22     0.06                             Tamiser_max
+  3.74      1.27     0.05        1    50.16   828.62  TriTas
+  2.25      1.30     0.03        1    30.09    30.09  ConstruireTableau
+  2.25      1.33     0.03        1    30.09    30.09  EcrireFichier
+  0.75      1.34     0.01        1    10.03    10.03  GetNombreElements
+  0.00      1.34     0.00        1     0.00   385.20  ConstruireTas
+  0.00      1.34     0.00        1     0.00     0.00  OuvrirFichier
 
 			Call graph
 
 
-granularity: each sample hit covers 2 byte(s) for 0.70% of 1.42 seconds
+granularity: each sample hit covers 2 byte(s) for 0.74% of 1.34 seconds
 
 index % time    self  children    called     name
                                                  <spontaneous>
-[1]     95.4    0.00    1.35                 main [1]
-                0.01    0.88       1/1           TriTas [3]
-                0.00    0.44       1/1           ConstruireTas [4]
-                0.02    0.00       1/1           GetNombreElements [9]
+[1]     95.5    0.00    1.28                 main [1]
+                0.05    0.78       1/1           TriTas [3]
+                0.00    0.39       1/1           ConstruireTas [4]
+                0.03    0.00       1/1           ConstruireTableau [9]
+                0.03    0.00       1/1           EcrireFichier [10]
+                0.01    0.00       1/1           GetNombreElements [11]
                 0.00    0.00       1/1           OuvrirFichier [12]
-                0.00    0.00       1/1           ConstruireTableau [10]
-                0.00    0.00       1/1           EcrireFichier [11]
 -----------------------------------------------
                              100867451             Tamiser_max_rec [2]
-                0.29    0.15 2500000/7499999     ConstruireTas [4]
-                0.59    0.29 4999999/7499999     TriTas [3]
-[2]     92.8    0.88    0.44 7499999+100867451 Tamiser_max_rec [2]
-                0.18    0.00 108367450/108367450     EnfantGauche [5]
-                0.15    0.00 100867451/105867450     Echange [6]
-                0.11    0.00 108367450/108367450     EnfantDroite [7]
+                0.27    0.11 2500000/7499999     ConstruireTas [4]
+                0.54    0.23 4999999/7499999     TriTas [3]
+[2]     86.0    0.81    0.34 7499999+100867451 Tamiser_max_rec [2]
+                0.16    0.00 100867451/105867450     Echange [5]
+                0.10    0.00 108367450/108367450     EnfantGauche [6]
+                0.08    0.00 108367450/108367450     EnfantDroite [7]
                              100867451             Tamiser_max_rec [2]
 -----------------------------------------------
-                0.01    0.88       1/1           main [1]
-[3]     63.1    0.01    0.88       1         TriTas [3]
-                0.59    0.29 4999999/7499999     Tamiser_max_rec [2]
-                0.01    0.00 4999999/105867450     Echange [6]
+                0.05    0.78       1/1           main [1]
+[3]     61.6    0.05    0.78       1         TriTas [3]
+                0.54    0.23 4999999/7499999     Tamiser_max_rec [2]
+                0.01    0.00 4999999/105867450     Echange [5]
 -----------------------------------------------
-                0.00    0.44       1/1           main [1]
-[4]     30.9    0.00    0.44       1         ConstruireTas [4]
-                0.29    0.15 2500000/7499999     Tamiser_max_rec [2]
------------------------------------------------
-                0.18    0.00 108367450/108367450     Tamiser_max_rec [2]
-[5]     12.7    0.18    0.00 108367450         EnfantGauche [5]
+                0.00    0.39       1/1           main [1]
+[4]     28.7    0.00    0.39       1         ConstruireTas [4]
+                0.27    0.11 2500000/7499999     Tamiser_max_rec [2]
 -----------------------------------------------
                 0.01    0.00 4999999/105867450     TriTas [3]
-                0.15    0.00 100867451/105867450     Tamiser_max_rec [2]
-[6]     11.0    0.16    0.00 105867450         Echange [6]
+                0.16    0.00 100867451/105867450     Tamiser_max_rec [2]
+[5]     12.7    0.17    0.00 105867450         Echange [5]
 -----------------------------------------------
-                0.11    0.00 108367450/108367450     Tamiser_max_rec [2]
-[7]      7.8    0.11    0.00 108367450         EnfantDroite [7]
+                0.10    0.00 108367450/108367450     Tamiser_max_rec [2]
+[6]      7.5    0.10    0.00 108367450         EnfantGauche [6]
+-----------------------------------------------
+                0.08    0.00 108367450/108367450     Tamiser_max_rec [2]
+[7]      6.0    0.08    0.00 108367450         EnfantDroite [7]
 -----------------------------------------------
                                                  <spontaneous>
-[8]      4.6    0.07    0.00                 Tamiser_max_rec_2 [8]
+[8]      4.5    0.06    0.00                 Tamiser_max [8]
 -----------------------------------------------
-                0.02    0.00       1/1           main [1]
-[9]      1.4    0.02    0.00       1         GetNombreElements [9]
+                0.03    0.00       1/1           main [1]
+[9]      2.2    0.03    0.00       1         ConstruireTableau [9]
 -----------------------------------------------
-                0.00    0.00       1/1           main [1]
-[10]     0.0    0.00    0.00       1         ConstruireTableau [10]
+                0.03    0.00       1/1           main [1]
+[10]     2.2    0.03    0.00       1         EcrireFichier [10]
 -----------------------------------------------
-                0.00    0.00       1/1           main [1]
-[11]     0.0    0.00    0.00       1         EcrireFichier [11]
+                0.01    0.00       1/1           main [1]
+[11]     0.7    0.01    0.00       1         GetNombreElements [11]
 -----------------------------------------------
                 0.00    0.00       1/1           main [1]
 [12]     0.0    0.00    0.00       1         OuvrirFichier [12]
@@ -76,7 +76,7 @@ index % time    self  children    called     name
 
 Index by function name
 
-  [10] ConstruireTableau       [7] EnfantDroite            [2] Tamiser_max_rec
-   [4] ConstruireTas           [5] EnfantGauche            [8] Tamiser_max_rec_2
-   [6] Echange                 [9] GetNombreElements       [3] TriTas
-  [11] EcrireFichier          [12] OuvrirFichier
+   [9] ConstruireTableau       [7] EnfantDroite            [8] Tamiser_max
+   [4] ConstruireTas           [6] EnfantGauche            [2] Tamiser_max_rec
+   [5] Echange                [11] GetNombreElements       [3] TriTas
+  [10] EcrireFichier          [12] OuvrirFichier

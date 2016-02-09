@@ -3,6 +3,7 @@
 #include "triTas.h"
 
 //Fonction qui va allouer la mémoire nécessaire pour créer un tableau contenant l'ensemble des entiers présents dans le fichier
+//Et remplir le tableau avec les entiers
 int* ConstruireTableau(FILE *fichier,int nbElemts) {
 
 	//Allocation de mémoire dynamique
@@ -12,7 +13,7 @@ int* ConstruireTableau(FILE *fichier,int nbElemts) {
 	int a, i = 0 ;
 
 
-	//On enregistre les entiers dans le tableau
+	//On enregistre les entiers dans le tableau tant qu'on est pas arrivé à la fin du fichier
 	while (fscanf(fichier,"%d", &a ) != EOF){
 		T[i] = a ;
 		i++ ;
@@ -21,7 +22,7 @@ int* ConstruireTableau(FILE *fichier,int nbElemts) {
 	return T ;
 }
 
-//Fonction d'affichage du tableau
+//Fonction d'affichage du tableau, utilisé lorsque l'option -o n'est pas précisée
 void AfficherTableau(int* t,int taille){
 	for (int i = 0 ; i < taille ; i++){
 		printf("%d\n", t[i]) ;
@@ -39,9 +40,9 @@ int EnfantDroite(int i){
 
 //Fonction qui va échanger l'adresse memoire d'un entier a avec l'adresse d'un entier b
 void Echange(int* a,int* b){
-	int tmp=*a;
-	*a=*b;
-	*b=tmp;
+	int tmp=*a; //On déclare un entier égal à l'entier pointé par a
+	*a=*b; //On remplace la valeur du pointeur a par la valeur pointée par b
+	*b=tmp; //Puis on remplace la valeur pointée par b par tmp
 }
 
 //RECURSIF
@@ -49,7 +50,7 @@ void Echange(int* a,int* b){
 //	- pour la construction initiale du tas (ConstruireTas)
 //	- pour le tri dans l'ordre croissant (TriTas) 
 void Tamiser_max_rec(int* t,int racine,int taille){
-	int pos_max ;
+	int pos_max ; //On déclare un entier qui va contenir le maximum
 	//On récupère les enfants de la racine
 	int gauche = EnfantGauche(racine) ;
 	int droite = EnfantDroite(racine) ;
@@ -82,27 +83,27 @@ void Tamiser_max_rec(int* t,int racine,int taille){
 //	- pour la construction initiale du tas (ConstruireTas)
 //	- pour le tri dans l'ordre croissant (TriTas) 
 void Tamiser_max(int* t,int racine,int taille){
-	int enfant ; //On définit un variable qui contiendra la valeur de l'enfant (gauche au début de la boucle)
+	int pos_max ; //On définit un variable qui contiendra la valeur de l'enfant (gauche au début de la boucle)
 
 	//On continue tant que l'enfant gauche de la racine est inférieur ou égal à la taille du tas
 	//En cas d'échange entre un enfant et la racine, on va effectuer la même vérification avec les anciens enfants du premier et le second
-	while(2*racine+1 <= taille) {
-		enfant = EnfantGauche(racine) ;
+	while(EnfantGauche(racine) <= taille) {
+		pos_max = EnfantGauche(racine) ; //On déclare la position max comme étant l'enfant gauche
 		//On determine lequel des enfants (gauche ou droite) de racine a la plus grande valeur
 		//Uniquement si il y'a deux enfants à comparer (si l'indice de l'enfant gauche n'est pas le dernier élément du tableau)
-		if((enfant<taille) && (t[enfant] < t[enfant+1])){
-			enfant++ ;
+		if((pos_max<taille) && (t[pos_max] < t[pos_max+1])){
+			pos_max++ ;
 		}
 		// On teste ensuite ce max contre racine
-		if(t[racine] < t[enfant]){
+		if(t[racine] < t[pos_max]){
 			//Si le max est plus grand que racine, on fait remonter ce max à la position de racine (echange)
-			Echange(&t[racine],&t[enfant]) ;
+			Echange(&t[racine],&t[pos_max]) ;
 			//Et on détermine l'indice de la racine comme étant à la position de son ancien enfant
-			racine = enfant ;
+			racine = pos_max ;
 			//Au prochain tour de boucle, on comparera les enfants du max (gauche ou droite) avec la racine à leur nouveau père (ancienne racine)
 		}
 		else { 
-			break ; //On break car il n'y a pas eu d'échange, le tas n'a pas été modifié, il n'y a pas besoin de vérifier les autres valeur
+			break ; //On break car il n'y a pas eu d'échange, le tas n'a pas été modifié, il n'y a pas besoin de vérifier les noeuds inférieurs
 		}
 	}
 }
@@ -122,7 +123,7 @@ void ConstruireTas(int* t,int taille,Pfonction Tamiser){
 //Fonction de tri dans l'ordre croissant du Tas
 //Appelle la fonction Tamiser
 //On fait descendre la racine au maximum de l'arbre, via echange, puis on reconstruit l'arbre avec la nouvelle racine
-//On recommence jusqu'à arriver au deuxième indice de l'arbre
+//On recommence jusqu'à arriver au deuxième indice de l'arbre (la première valeur étant déjà forcement triée)
 void TriTas(int* t,int taille,Pfonction Tamiser){
 	for(int i = (taille-1); i>0 ; i--) {
 		Echange(&t[0],&t[i]) ; // On échange le premier élément du tableau (soit le max) avec le dernier élément du tableau
