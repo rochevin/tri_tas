@@ -15,7 +15,7 @@ output:
 
 Le but du programme est de trier une liste d'entier présent dans un fichier dans l'ordre croissant. Le programme utilise des structures particulières de programmation pour fonctionner :
 
-* Un tas représentant un arbre binaire partiellement ordonné (représenté par un tableau).
+* Un tas représentant un arbre binaire partiellement ordonné.
 * Pour chaque noeud $n$, son enfant gauche est placé en $2n$ et son enfant droite en $2n+1$.
 * Ce tas doit être organisé en Tas max, soit la plus grande valeur comme racine (en premier indice).
 
@@ -57,7 +57,7 @@ En plus de contenir les en-têtes de fonctions, __`triTas.h`__ va définir un ty
 ```c
 typedef void (*Pfonction)(int*,int,int);
 ```
-ce `Pfonction` va contenir un pointeur vers une fonction, ce qui va permettre au programme de choisir entre la fonction recursive ou itérative du tamisage (`Tamiser_max_rec` ou `Tamiser_max`).
+`Pfonction` va contenir un pointeur vers une fonction, ce qui va permettre au programme de choisir entre la fonction recursive ou itérative du tamisage (`Tamiser_max_rec` ou `Tamiser_max`).
 
 ##__`triTas.c`__
 
@@ -215,10 +215,11 @@ index % time    self  children    called     name
 
 ###Commentaires
 
-Le nombre d'appel entre la fonction récursive et itérative pour le programme est toujours le même, soit $7499999$ appels, ce qui correspond à $2500000$ appel par `Construire_Tas` et $4999999$ par `TriTas`.
+Le nombre d'appels entre la fonction récursive et itérative pour le programme est toujours le même, soit $7499999$ appels, soit $2500000$ pour `Construire_Tas` et $4999999$ pour `TriTas`.
+
 En revanche, la fonction récursive est appelée par elle même $100867451$ fois, ce qui correspond à un coût en temps conséquent, comparé à la fonction itérative, d'où le gain de temps opéré par cette dernière.
 
-La fonction `Echange` est appelée le même nombre de fois entre les deux types de fonction, car les conditions de l'appel sont les mêmes (sans compter les appels par la fonction `TriTas`, qui sont également identiques).
+La fonction `Echange` est utilisée le même nombre de fois entre les deux types de fonction, car les conditions de l'appel sont les mêmes (sans compter les appels par la fonction `TriTas`, qui sont également identiques).
 
 Ce qui est intéressant de constater, c'est que les fonctions `EnfanGauche` et `EnfantDroite` sont appelées un grand nombre de fois. Ces fonctions permettent certes de globaliser la recherche des enfants d'une racine, en ne faisant le calcul qu'une fois (dans la fonction), mais qui en contrepartie coûte cher en temps de calcul. 
 
