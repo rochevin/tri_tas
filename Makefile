@@ -15,7 +15,7 @@ endif
 all: triTas.o fichier.o
 	$(CC) $(OPT) -o $(EXE) $(SRC).c $^
 
-#On ajoute les header comme étant des dépéndance des fichiers
+#On ajoute les header comme étant des dépéndances des fichiers
 triTas.o: triTas.h
 
 fichier.o: fichier.h

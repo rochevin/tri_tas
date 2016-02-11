@@ -13,7 +13,7 @@ output:
 
 # But du programme
 
-Le but du programme est de trier une liste d'entier présent dans un fichier dans l'ordre croissant. Le programme utilise des structures particulières de programmation pour fonctionner :
+Le but du programme est de trier une liste d'entiers dans l'ordre croissant. Le programme utilise des structures particulières de programmation pour fonctionner :
 
 * Un tas représentant un arbre binaire partiellement ordonné.
 * Pour chaque noeud $n$, son enfant gauche est placé en $2n$ et son enfant droite en $2n+1$.
@@ -42,12 +42,12 @@ void EcrireFichier(char*,int*,int) ;
 int GetNombreElements(FILE *) ;
 ```
 
-* `OuvrirFichier` Ouvre un fichier en mode lecture.
+* `OuvrirFichier` ouvre un fichier en mode lecture.
     * __Input__ : Un nom de fichier.
     * __Output__ : Un pointeur de fichier.
-* `EcrireFichier` Va écrire le résultat du Tas trié dans un fichier.
+* `EcrireFichier` va écrire le résultat du Tas trié dans un fichier.
     * __Input__ : Un nom de fichier, le Tas et la taille du tas.
-* `GetNombreElements` Retourne le nombre d'éléments présents dans le fichier donné en argument.
+* `GetNombreElements` retourne le nombre d'éléments présents dans le fichier donné en argument.
     * __Input__ : Un pointeur de fichier.
     * __Output__ : Un entier correspondant au nombre d'entiers présents dans le fichier.
 
@@ -97,7 +97,7 @@ void TriTas(int*,int,Pfonction Tamiser) ;
 
 Le fonctionnement de `main.c` s'effectue de la façon suivante :
 
-* On récupère les options que l'utilisateur à passé en argument : `Usage: ./triTas [-r (recursive usage)] [-i input file name (non optional)] [-o output file name (optional)]`
+* On récupère les options que l'utilisateur a passé en argument : `Usage: ./triTas [-r (recursive usage)] [-i input file name (non optional)] [-o output file name (optional)]`
 * Si l'utilisateur n'indique pas de fichier de sortie, le tri sera affiché sur la sortie standard avec `AfficherTableau`.
 * Si l'utilisateur choisit l'option `-r`, on fera appel à la fonction `Tamiser_max_rec`, sinon par défaut le programme utilise la fonction `Tamiser_max`.
 * On ouvre le fichier portant le nom donné en argument (`OuvrirFichier`).
@@ -227,12 +227,12 @@ La fonction `EnfanGauche` est appelée plus souvent dans la fonction itérative,
 
 #Problèmes rencontrés
 
-Ne pas se tromper dans les index (taille du tableau, position du compteur, position des enfants) à été la principale difficultée du programme. Ce qui explique pourquoi les fonctions `EnfanGauche` et `EnfantDroite` ont été codée, dans le but de faciliter la recherche des enfants, car on est sûr de ne pas se tromper dans les index si on englobe le calcul dans une fonction qu'on utilise partout.
+Ne pas se tromper dans les indices (taille du tableau, position du compteur, position des enfants) a été la principale difficultée rencontrée. Ce qui explique pourquoi les fonctions `EnfanGauche` et `EnfantDroite` ont été codées, dans le but de faciliter la recherche des enfants, car on est sûr de ne pas se tromper dans la position des enfants si on englobe le calcul dans une fonction qu'on utilise partout.
 
 La fonction itérative a été plus difficile à coder que la fonction récursive, du fait qu'elle soit moins intuitive, même si plus performante. 
 
 #Améliorations possibles
 
-Il serait facile d'améliorer le programme en supprimmant les fonctions `EnfanGauche` et `EnfantDroite`, qui coûtent plus cher en temps qu'un simple calcul mathématique directement dans la fonction. Sur un faible nombre d'entier, cela est totalement négligeable, mais sur un plus grand nombre, la différence en temps de calcul commence à se faire voir.
+Il serait facile d'améliorer le programme en supprimmant les fonctions `EnfanGauche` et `EnfantDroite`, qui coûtent plus cher en temps qu'un simple calcul mathématique directement dans la fonction. Sur un faible nombre d'entier, cela est totalement négligeable, mais sur un (très) grand nombre, la différence en temps de calcul commence à se faire voir.
 
 Une amélioration possible de la fonction récursive en tail queue recursion (récursion terminale) serait envisageable, pour que celle-ci soit "transformée" en fonction itérative par le compilateur. Du point de vue code, la fonction serait plus compréhensible, et d'un point de vue exécution, plus performante (autant que si on avait codé directement une fonction itérative).
