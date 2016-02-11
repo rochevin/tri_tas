@@ -233,6 +233,6 @@ La fonction itérative a été plus difficile à coder que la fonction récursiv
 
 #Améliorations possibles
 
-Il serait facile d'améliorer le programme en supprimmant les fonctions `EnfanGauche` et `EnfantDroite`, qui coûtent plus cher en temps qu'un simple calcul mathématique directement dans la fonction. Sur un faible nombre d'entier, cela est totalement négligeable, mais sur un (très) grand nombre, la différence en temps de calcul commence à se faire voir.
+Il serait facile d'améliorer le programme en supprimmant les fonctions `EnfanGauche` et `EnfantDroite`, qui coûtent plus cher en temps qu'un simple calcul mathématique directement dans la fonction. Sur un faible nombre d'entiers, cela est totalement négligeable, mais beaucoup moins sur un (très) grand nombre.
 
 Une amélioration possible de la fonction récursive en tail queue recursion (récursion terminale) serait envisageable, pour que celle-ci soit "transformée" en fonction itérative par le compilateur. Du point de vue code, la fonction serait plus compréhensible, et d'un point de vue exécution, plus performante (autant que si on avait codé directement une fonction itérative).

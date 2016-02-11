@@ -400,7 +400,7 @@ index % time    self  children    called     name
 </div>
 <div id="ameliorations-possibles" class="section level1">
 <h1>Améliorations possibles</h1>
-<p>Il serait facile d’améliorer le programme en supprimmant les fonctions <code>EnfanGauche</code> et <code>EnfantDroite</code>, qui coûtent plus cher en temps qu’un simple calcul mathématique directement dans la fonction. Sur un faible nombre d’entier, cela est totalement négligeable, mais sur un (très) grand nombre, la différence en temps de calcul commence à se faire voir.</p>
+<p>Il serait facile d’améliorer le programme en supprimmant les fonctions <code>EnfanGauche</code> et <code>EnfantDroite</code>, qui coûtent plus cher en temps qu’un simple calcul mathématique directement dans la fonction. Sur un faible nombre d’entiers, cela est totalement négligeable, mais beaucoup moins sur un (très) grand nombre.</p>
 <p>Une amélioration possible de la fonction récursive en tail queue recursion (récursion terminale) serait envisageable, pour que celle-ci soit “transformée” en fonction itérative par le compilateur. Du point de vue code, la fonction serait plus compréhensible, et d’un point de vue exécution, plus performante (autant que si on avait codé directement une fonction itérative).</p>
 </div>
 
