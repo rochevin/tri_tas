@@ -420,7 +420,7 @@ index % time    self  children    called     name
 <h1>Améliorations possibles</h1>
 <p>Il serait facile d’améliorer le programme en supprimmant les fonctions <code>EnfanGauche</code> et <code>EnfantDroite</code>, qui coûtent plus cher en temps qu’un simple calcul mathématique directement dans la fonction. Sur un faible nombre d’entiers, cela est totalement négligeable, mais beaucoup moins sur un (très) grand nombre.</p>
 <p>Une amélioration possible de la fonction récursive en tail queue recursion (récursion terminale) serait envisageable, pour que celle-ci soit “transformée” en fonction itérative par le compilateur. Du point de vue code, la fonction serait plus compréhensible, et d’un point de vue exécution, plus performante (autant que si on avait codé directement une fonction itérative).</p>
-<p>Une autre possibilitée serait d’améliorer l’algorithme en lui-même, en lui évitant de trier une liste d’entiers qui l’est déjà. Cet algorithme porte le nom de “<em>Smoothsort</em>”, qui possède l’avantage d’être plus efficace pour des entiers déjà triés ou presque. Il perd cependant en temps de calul par rapport au <em>Tri par tas</em> pour les entiers triés dans l’ordre décroissant, qui est plus effiace (voir partie tests).</p>
+<p>Une autre possibilitée serait d’améliorer l’algorithme en lui-même, en lui évitant de trier une liste d’entiers qui l’est déjà. On pourrait alors utiliser l’algorithme de “<em>Smoothsort</em>”, qui possède l’avantage d’être plus efficace pour des entiers déjà triés ou presque. Il perd cependant en temps de calul par rapport au <em>Tri par tas</em> pour les entiers triés dans l’ordre décroissant, qui est plus efficace (voir partie tests).</p>
 </div>
 
 
