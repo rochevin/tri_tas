@@ -24,7 +24,7 @@ Le but du programme est de trier une liste d'entiers dans l'ordre croissant. Le 
 * __`README.html`__ : Fichier README.
 * __`Makefile`__ : Fichier de compilation.
 * __`main.c`__ : Fichier principal du programme.
-* __`fichier.c`__ : Fichier contenant les fonctions nécessaire à la lecture et écriture de fichiers.
+* __`fichier.c`__ : Fichier contenant les fonctions nécessaires à la lecture et écriture de fichiers.
 * __`fichier.h`__ : Fichier d'en-tête de __`fichier.c`__.
 * __`triTas.c`__ : Fichier contenant les fonctions d'insertion du Tas, de tri et de tamisage.
 * __`triTas.h`__ : Fichier d'en-tête de __`triTas.c`__.
@@ -75,18 +75,18 @@ void ConstruireTas(int*,int,Pfonction Tamiser) ;
 void TriTas(int*,int,Pfonction Tamiser) ;
 ```
 
-* `ConstruireTableau` va construire un tas initial (ne suivant pas les règles d'un arbre binaire complet partiellement ordonné) à partir d'une liste d'entier présent dans un fichier.
+* `ConstruireTableau` va construire un tas initial (ne suivant pas les règles d'un arbre binaire complet partiellement ordonné) à partir d'une liste d'entiers présents dans un fichier.
     * __Input__ : Un pointeur de fichier, ainsi que le nombre d'éléments présents dans le fichier.
     * __Output__ : Un tableau contenant les entiers.
-* `AfficherTableau` sert dans le cas ou l'utilisateur ne fourni pas de fichier de sortie en argument.
-    * __Input__ : Un tableau d'entier et la taille du tableau.
+* `AfficherTableau` sert dans le cas ou l'utilisateur ne fournit pas de fichier de sortie en argument.
+    * __Input__ : Un tableau d'entiers et la taille du tableau.
     * __Output__ : Affichage du tas sur la sortie standard.
 * `EnfantGauche` et `EnfantDroite` vont servir à renvoyer la position des enfants pour une racine donnée.
     * __Input__ : Un entier correspondant à la position de la racine dans le tableau.
     * __Output__ : Un entier correspondant à la position de l'enfant droite ou gauche de la racine dans le tableau.
 * `Echange` va échanger deux éléments dans un tableau.
     * __Input__ : Deux références correspondant à l'espace mémoire de deux entiers.
-* `Tamiser_max_rec` et `Tamiser_max` sont les deux fonctions les plus importantes du programme (usage récursif ou itératif). Elles vont replacer un entier correctement dans le Tas en fonction des règles établies (Tas max ou tas min), en le comparant avec ses enfants, et en faisant l'échange si besoin est jusqu'à ce que l'entier soit correctement placé dans le tableau.
+* `Tamiser_max_rec` et `Tamiser_max` sont les deux fonctions les plus importantes du programme (usage __récursif__ ou __itératif__). Elles vont replacer un entier correctement dans le Tas en fonction des règles établies (Tas max ou tas min), en le comparant avec ses enfants, et en faisant l'échange si besoin est jusqu'à ce que l'entier soit correctement placé dans le tableau.
     * __Input__ : Le tas, la position de l'entier dans le tas et la taille du tableau.
 * `ConstruireTas` va construire le tas suivant les règles établies (tas max ou min) pour représenter l'arbre correctement (voir partie but du programme).
     * __Input__ : La liste des entiers sous forme de tableau, la taille du tableau et la fonction à utiliser pour construire le tas (`Tamiser_max_rec` ou `Tamiser_max`).
@@ -131,11 +131,11 @@ Le fonctionnement de `main.c` s'effectue de la façon suivante :
 
 Pour construire ces deux tableaux, chaque test a été répété $1000$ fois dans le but de produire un temps moyen cohérent. 
 
-Ce qu'on peut constater, c'est que peu importe le nombre d'entier, la fonction itérative est toujours plus rapide que la fonction récursive. 
+Ce que l'on peut constater, c'est que peu importe le nombre d'entiers, la fonction itérative est toujours plus rapide que la fonction récursive. 
 
 Même si la fonction récursive peut faire appel à un nombre plus restreint de fonctions que l'itératif de tour de boucle (notamment lorsque les entiers sont déjà triés), il est probable que la différence de temps d'éxecution soit due à la plus forte consommation en mémoire et en temps d'un appel de fonction comparé à un tour de boucle.
 
-À priori, il vaut toujours mieux utiliser la fonction itérative, qui est plus rapide, mais même pour un grand nombre d'entier à trier, le temps d'éexecution est très court. Ceci peut s'expliquer par la complexité du tri, qui est de $n \times log(n)$, et non pas quadratique ($n^2$).
+À priori, il vaut mieux toujours utiliser la fonction itérative, qui est plus rapide, mais même pour un grand nombre d'entiers à trier, le temps d'éxecution est très court. Ceci peut s'expliquer par la complexité du tri, qui est de $n \times log(n)$, et non pas quadratique ($n^2$).
 
 Pour trier des entiers déjà triés, la fonction recursive semble légèrement plus performante lorsque les entiers sont triés dans l'ordre décroissant.
 
@@ -221,7 +221,7 @@ En revanche, la fonction récursive est appelée par elle même $100867451$ fois
 
 La fonction `Echange` est utilisée le même nombre de fois entre les deux types de fonction, car les conditions de l'appel sont les mêmes (sans compter les appels par la fonction `TriTas`, qui sont également identiques).
 
-Ce qui est intéressant de constater, c'est que les fonctions `EnfanGauche` et `EnfantDroite` sont appelées un grand nombre de fois. Ces fonctions permettent certes de globaliser la recherche des enfants d'une racine, en ne faisant le calcul qu'une fois (dans la fonction), mais qui en contrepartie coûte cher en temps de calcul. 
+Ce qu'il est intéressant de constater, c'est que les fonctions `EnfanGauche` et `EnfantDroite` sont appelées un grand nombre de fois. Celles-ci permettent certes de globaliser la recherche des enfants d'une racine, en ne faisant le calcul qu'une fois (dans la fonction), mais qui en contrepartie coûte cher en temps de calcul. 
 
 La fonction `EnfanGauche` est appelée plus souvent dans la fonction itérative, car elle fait partie de la condition de la boucle, et de la recherche du premier enfant pour déterminer le max. En contrepartie, il n'y a pas d'appel à la fonction `EnfantDroite`, car il suffit d'ajouter un $+1$ lors du test du plus grand enfant. Dans la fonction récursive en revanche, les deux fonctions sont appelées un nombre égal de fois.
 
@@ -236,3 +236,5 @@ La fonction itérative a été plus difficile à coder que la fonction récursiv
 Il serait facile d'améliorer le programme en supprimmant les fonctions `EnfanGauche` et `EnfantDroite`, qui coûtent plus cher en temps qu'un simple calcul mathématique directement dans la fonction. Sur un faible nombre d'entiers, cela est totalement négligeable, mais beaucoup moins sur un (très) grand nombre.
 
 Une amélioration possible de la fonction récursive en tail queue recursion (récursion terminale) serait envisageable, pour que celle-ci soit "transformée" en fonction itérative par le compilateur. Du point de vue code, la fonction serait plus compréhensible, et d'un point de vue exécution, plus performante (autant que si on avait codé directement une fonction itérative).
+
+Une autre possibilitée serait d'améliorer l'algorithme en lui-même, en lui évitant de trier une liste d'entiers qui l'est déjà. Cet algorithme porte le nom de "*Smoothsort*", qui possède l'avantage d'être plus efficace pour des entiers déjà triés ou presque. Il perd cependant en temps de calul par rapport au *Tri par tas* pour les entiers triés dans l'ordre décroissant, qui est plus effiace (voir partie tests).
