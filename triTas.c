@@ -13,7 +13,7 @@ int* ConstruireTableau(FILE *fichier,int nbElemts) {
 	int a, i = 0 ;
 
 
-	//On enregistre les entiers dans le tableau tant qu'on est pas arrivé à la fin du fichier
+	//On enregistre les entiers dans le tableau tant que l'on est pas arrivé à la fin du fichier
 	while (fscanf(fichier,"%d", &a ) != EOF){
 		T[i] = a ;
 		i++ ;

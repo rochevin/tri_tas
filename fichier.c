@@ -54,12 +54,12 @@ int GetNombreElements(FILE *fichier){
 	}
  
 	//Si ce caractère n'est pas un saut de ligne
-	//On rajoute +1 au ocmpteur
+	//On rajoute +1 au compteur
 	if(c2 != '\n'){
 		nLignes++ ;
 	}
 
-	//On remet le pointeur au début du fichier
+	//On remet le pointeur au début du  (Nécessaire ?)
 	rewind(fichier) ;
 	//Et on renvoit le nombre de lignes
 	return nLignes ;
